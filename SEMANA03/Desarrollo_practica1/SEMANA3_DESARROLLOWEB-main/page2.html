@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>page02 — Ventana + Card RGB (funcional)</title>
+  <link rel="stylesheet" href="page2styles.css">
+</head>
+<body>
+  <!-- (a) Ventana con 4 iconos SVG y sliders (UI en grises) -->
+  <section class="window">
+    <div class="titlebar">
+      <div class="title"><span class="dot"></span><span>Audio settings</span></div>
+      <div class="icons" aria-hidden="true">
+        <span class="icon" title="Buscar">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <span class="icon" title="Campana">
+          <svg viewBox="0 0 24 24"><path d="M6 19h12"/><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </span>
+        <span class="icon" title="Engranaje">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V22a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06A2 2 0 113.3 17.96l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H2a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06A2 2 0 116.04 3.3l.06.06a1.65 1.65 0 001.82.33H8a1.65 1.65 0 001-1.51V2a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06A2 2 0 1120.7 6.04l-.06.06a1.65 1.65 0 00-.33 1.82V8"/></svg>
+        </span>
+        <span class="icon" title="Info">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
+        </span>
+      </div>
+    </div>
+    <div class="content">
+      <form>
+        <label class="lbl">Media volume
+          <input class="range" type="range" min="0" max="100" value="40">
+        </label>
+        <label class="lbl">Alarm volume
+          <input class="range" type="range" min="0" max="100" value="60">
+        </label>
+        <label class="lbl">Icon click callback
+          <input class="range" type="range" min="0" max="100" value="25">
+        </label>
+        <div class="actions">
+          <button type="submit" class="btn primary">SUBMIT</button>
+          <button type="reset" class="btn">CLEAR</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- (b) Card RGB funcional (sin librerías) -->
+  <section class="card" id="card">
+    <div class="preview" id="preview" aria-label="Color actual"></div>
+    <div class="controls">
+      <div class="row">
+        <span class="ch">R</span>
+        <input id="r" class="range" type="range" min="0" max="255" value="80">
+        <input id="rn" class="num" type="number" min="0" max="255" value="80" inputmode="numeric">
+      </div>
+      <div class="row">
+        <span class="ch">G</span>
+        <input id="g" class="range" type="range" min="0" max="255" value="192">
+        <input id="gn" class="num" type="number" min="0" max="255" value="192" inputmode="numeric">
+      </div>
+      <div class="row">
+        <span class="ch">B</span>
+        <input id="b" class="range" type="range" min="0" max="255" value="92">
+        <input id="bn" class="num" type="number" min="0" max="255" value="92" inputmode="numeric">
+      </div>
+      <div class="bar">RGB actual: <code id="rgbCode" style="margin-left:6px;">rgb(80, 192, 92)</code></div>
+    </div>
+  </section>
+
+  <script>
+  // JS mínimo para funcionalidad RGB (sin librerías)
+  (function(){
+    const preview = document.getElementById('preview');
+    const r = document.getElementById('r'), rn = document.getElementById('rn');
+    const g = document.getElementById('g'), gn = document.getElementById('gn');
+    const b = document.getElementById('b'), bn = document.getElementById('bn');
+    const rgbCode = document.getElementById('rgbCode');
+
+    function clamp(v, min, max){ v = Number(v); if (isNaN(v)) v = 0; return Math.min(max, Math.max(min, Math.round(v))); }
+    function setRGB(rv, gv, bv){
+      const rgb = `rgb(${rv}, ${gv}, ${bv})`;
+      preview.style.backgroundColor = rgb;
+      rgbCode.textContent = rgb;
+    }
+    function syncFromRanges(){
+      const rv = clamp(r.value, 0, 255);
+      const gv = clamp(g.value, 0, 255);
+      const bv = clamp(b.value, 0, 255);
+      rn.value = rv; gn.value = gv; bn.value = bv;
+      setRGB(rv, gv, bv);
+    }
+    function syncFromNumbers(){
+      const rv = clamp(rn.value, 0, 255);
+      const gv = clamp(gn.value, 0, 255);
+      const bv = clamp(bn.value, 0, 255);
+      r.value = rv; g.value = gv; b.value = bv;
+      setRGB(rv, gv, bv);
+    }
+    for (const el of [r,g,b]) el.addEventListener('input', syncFromRanges);
+    for (const el of [rn,gn,bn]) el.addEventListener('input', syncFromNumbers);
+    for (const el of [rn,gn,bn]) el.addEventListener('change', syncFromNumbers);
+    syncFromRanges();
+  })();
+  </script>
+</body>
+</html>

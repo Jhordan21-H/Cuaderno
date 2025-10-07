@@ -1,0 +1,50 @@
+/* page02.css — Tema en escala de grises (blanco y negro), sólido y con bordes redondos */
+:root{
+  --bg:#0f0f11;
+  --panel:#161616;
+  --panel2:#121212;
+  --text:#efefef;
+  --muted:#bfbfbf;
+  --border:#2a2a2a;
+  --accent:#e5e5e5; /* pulgar/primario en gris claro */
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  display:grid;gap:22px;justify-content:center;
+  padding:22px;
+}
+
+/* ---------- (a) Ventana -------------- */
+.window{width:min(900px,100%);border:1px solid var(--border);border-radius:12px;background:var(--panel);overflow:hidden}
+.titlebar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#1a1a1a;border-bottom:1px solid var(--border)}
+.title{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:#fff}
+.icons{display:flex;gap:8px}
+.icon{width:18px;height:18px;display:grid;place-items:center;border-radius:6px;background:#171717;border:1px solid var(--border)}
+.icon svg{width:14px;height:14px;fill:none;stroke:#cfcfcf;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.content{padding:14px;background:var(--panel2)}
+
+form{display:grid;gap:12px}
+.lbl{display:grid;gap:6px;color:#d0d0d0}
+.range{-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;background:#101010;border:1px solid var(--border);outline:none}
+.range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:1px solid #cfcfcf;cursor:pointer}
+.range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);border:1px solid #cfcfcf;cursor:pointer}
+.actions{display:flex;gap:8px;margin-top:8px}
+.btn{border-radius:10px;border:1px solid var(--border);background:#171717;padding:10px 12px;color:var(--text);cursor:pointer}
+.btn.primary{background:#efefef;color:#0f0f0f;border-color:#efefef}
+
+/* ---------- (b) Card 2 partes en grises ---------- */
+.card{width:min(520px,100%);border:1px solid var(--border);border-radius:12px;background:var(--panel);display:grid;grid-template-rows:220px auto}
+.preview{border-bottom:1px solid var(--border);background:#57b36a;border-top-left-radius:12px;border-top-right-radius:12px;transition:background-color .1s linear}
+.controls{background:var(--panel2);padding:14px;border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+.row{display:grid;grid-template-columns:42px 1fr 64px;gap:10px;align-items:center;margin-bottom:10px}
+.ch{display:inline-grid;place-items:center;width:42px;height:28px;border:1px solid var(--border);border-radius:8px;background:#101010;color:#e0e0e0;font-weight:600}
+.num{width:64px;border:1px solid var(--border);border-radius:8px;background:#101010;color:#e8e8e8;padding:8px 6px}
+.num:focus{outline:1px solid var(--accent)}
+.bar{display:flex;justify-content:flex-end;margin-top:6px;color:#acacac;font-size:12px}
+.bar code{background:#101010;border:1px solid var(--border);padding:4px 6px;border-radius:6px;color:#e5e5e5}

@@ -1,0 +1,106 @@
+/* page1styles.css — Gris / Blanco & Negro, bordes redondos, sin degradados */
+:root{
+  --bg:#0f0f11;
+  --panel:#161616;
+  --panel2:#121212;
+  --text:#eeeeee;
+  --muted:#bfbfbf;
+  --border:#2a2a2a;
+  --accent:#efefef; /* acento claro (gris/blanco) para focus */
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  display:grid;place-items:center;
+  padding:20px;
+}
+
+/* Ventana */
+.window{
+  width:min(900px,100%);
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel);
+  overflow:hidden;
+}
+.titlebar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;
+  background:#1a1a1a; /* sólido */
+  border-bottom:1px solid var(--border);
+}
+.title{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:#fff}
+.icons{display:flex;gap:8px}
+.icon{width:18px;height:18px;display:grid;place-items:center;border-radius:6px;background:#171717;border:1px solid var(--border)}
+.icon svg{width:14px;height:14px;fill:none;stroke:#d0d0d0;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+.content{padding:14px;background:var(--panel2)}
+form{display:grid;gap:12px}
+
+/* Campos con etiqueta flotante y línea inferior en focus */
+.fld{position:relative}
+.fld input[type="text"],
+.fld input[type="email"],
+.fld select{
+  width:100%;
+  background:#101010;
+  color:var(--text);
+  padding:16px 12px 10px;
+  border-radius:10px;
+  outline:none;
+  border:1px solid var(--border);
+  border-bottom-width:1px;
+  transition:border-color .15s, border-bottom-width .15s;
+}
+.fld input::placeholder{color:transparent}
+.fld label{
+  position:absolute;left:12px;top:12px;
+  color:#c4c4c4;pointer-events:none;
+  transform-origin:left top;
+  transition:transform .15s ease,color .15s ease;
+}
+/* Base: etiqueta grande; en focus o con contenido: se eleva y acento claro */
+.fld:has(input:placeholder-shown) label{transform:translateY(0) scale(1)}
+.fld:focus-within label,
+.fld input:not(:placeholder-shown) + label{
+  transform:translateY(-12px) scale(.86);
+  color:var(--accent);
+}
+/* Efecto "como en la imagen": sólo la línea inferior cambia a claro y 2px */
+.fld:focus-within input,
+.fld input:not(:placeholder-shown){
+  border-color:var(--border);
+  border-bottom-color:var(--accent);
+  border-bottom-width:2px;
+}
+
+/* Select con flecha en gris */
+.fld select{appearance:none;background-image:
+    linear-gradient(45deg, transparent 50%, #c6c6c6 50%),
+    linear-gradient(135deg, #c6c6c6 50%, transparent 50%);
+    background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52%;
+    background-size:6px 6px, 6px 6px; background-repeat:no-repeat;
+}
+
+/* Campo imagen (50px alto, ícono gris centrado) */
+.drop{position:relative}
+.drop input[type="file"]{
+  width:100%;height:50px;
+  border:1px dashed var(--border);
+  background:#101010 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="%23cfcfcf" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>') no-repeat center;
+  color:#d0d0d0;border-radius:10px; padding:0 12px;
+}
+.drop input[type="file"]::file-selector-button{display:none}
+.drop label{position:absolute;left:12px;top:-9px;font-size:12px;color:var(--accent);background:var(--panel2);padding:0 6px}
+
+/* Checkbox y botones */
+.check{display:flex;align-items:center;gap:8px;color:#d6d6d6}
+.check input{width:16px;height:16px;accent-color:#f0f0f0}
+.actions{display:flex;gap:8px}
+.btn{border-radius:10px;border:1px solid var(--border);background:#171717;padding:10px 12px;color:var(--text);cursor:pointer}
+.btn.primary{background:#efefef;color:#0f0f11;border-color:#efefef}
